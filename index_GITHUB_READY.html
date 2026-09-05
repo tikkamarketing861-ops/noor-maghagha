@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d3b2e">
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--green:#0d3b2e;--green2:#155844;--gold:#c7a35a;--bg:#f7f4ec;--card:#fffdf8;--text:#18342b;--muted:#718078}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:82px}
+.top{background:var(--green);color:white;padding:18px 18px 20px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:28px;font-weight:800}.subtitle{color:#e8d8ad;font-size:13px;margin-top:3px}.icon{border:1px solid #ffffff40;background:#ffffff12;color:white;border-radius:12px;width:42px;height:42px;font-size:20px}
+main{max-width:720px;margin:auto;padding:16px}.hero{background:linear-gradient(145deg,var(--green),var(--green2));color:white;border-radius:24px;padding:28px 20px;text-align:center;box-shadow:0 10px 28px #0d3b2e22}.ornament{color:var(--gold);font-size:42px}.hero h1{font-size:20px;margin:8px 0}.hero p{color:#e7eee9}.primary{background:var(--gold);color:#142a22;border:0;border-radius:14px;padding:13px 22px;font-weight:800;font-size:16px}
+.card{background:var(--card);border:1px solid #e9e2d4;border-radius:20px;padding:17px;margin-top:15px;box-shadow:0 5px 18px #18342b0a}.last{display:flex;justify-content:space-between;align-items:center}.label{color:var(--gold);font-size:12px;font-weight:800}.last h3{margin:5px 0}.last p,.tile span{margin:0;color:var(--muted);font-size:13px}.small{border:1px solid var(--gold);background:transparent;color:var(--green);border-radius:12px;padding:9px 13px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.tile{background:var(--card);border:1px solid #e9e2d4;border-radius:18px;padding:18px;text-align:right;color:var(--text);font-size:25px;display:flex;flex-direction:column;gap:7px}.tile b{font-size:16px}.section-title{font-weight:800;font-size:18px}.content p{line-height:2}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:72px;background:#fffdf9;border-top:1px solid #e9e2d4;display:flex;justify-content:center;gap:5px;z-index:5}.bottom button{border:0;background:transparent;color:#718078;min-width:74px;font-size:20px}.bottom span{display:block;font-size:11px;margin-top:3px}.bottom .active{color:var(--green);font-weight:800}
+.quran-list{display:grid;gap:10px}.surah{width:100%;border:1px solid #e9e2d4;background:#fffdf8;border-radius:15px;padding:14px;text-align:right;display:flex;justify-content:space-between;align-items:center}.surah strong{font-size:17px}.surah small{color:var(--muted)}.ayah{font-family:"Noto Naskh Arabic","Amiri",serif;font-size:var(--ayah-size,25px);line-height:2.1;padding:15px 5px;border-bottom:1px solid #eee5d7}.back{border:0;background:none;color:var(--green);font-weight:800;padding:0 0 12px;font-size:15px}
+.dark{--bg:#101814;--card:#17231e;--text:#f2eee3;--muted:#aab7b0}.dark .top,.dark .bottom{background:#0a241b}.dark .tile,.dark .card,.dark .surah{border-color:#294239}.dark .primary{color:#10251d}
+@media(max-width:430px){.brand{font-size:24px}.hero{padding:24px 15px}}
+
+.searchbox{display:flex;gap:8px;margin:12px 0}.searchbox input{flex:1;border:1px solid #ddd3c1;border-radius:12px;padding:12px;background:transparent;color:inherit}.searchbox button{border:0;border-radius:12px;padding:10px 15px;background:var(--green);color:#fff}.fav{border:0;background:transparent;font-size:24px;float:left}.counter{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:#efe6d3}.settings-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #eee5d7}.pill{padding:6px 10px;border-radius:10px;border:1px solid #d8c69f;background:transparent;color:inherit}
+
+</style>
+<title>نور مغاغة</title>
+</head>
+<body>
+<header class="top">
+  <div>
+    <div class="brand">نور مغاغة</div>
+    <div class="subtitle">صدقة جارية لأهل مركز مغاغة</div>
+  </div>
+  <button id="themeBtn" class="icon">☾</button>
+</header>
+
+<main>
+<section class="hero">
+  <div class="ornament">۞</div>
+  <h1>السلام عليكم ورحمة الله وبركاته</h1>
+  <p>نورٌ في القلوب، وأثرٌ يبقى.</p>
+  <button class="primary" onclick="openQuran()">📖 ابدأ القراءة</button>
+</section>
+<section class="last card">
+  <div><span class="label">آخر قراءة</span><h3 id="lastRead">لم تبدأ القراءة بعد</h3><p id="lastMeta">اختر سورة من القرآن للبدء</p></div>
+  <button class="small" onclick="openQuran()">متابعة</button>
+</section>
+<div class="grid">
+ <button class="tile" onclick="openQuran()">📖<b>القرآن الكريم</b><span>السور والآيات</span></button>
+ <button class="tile" onclick="showSearch()">🔎<b>بحث القرآن</b><span>ابحث عن آية أو كلمة</span></button>
+ <button class="tile" onclick="showAzkar()">📿<b>الأذكار</b><span>أذكار مختارة</span></button>
+ <button class="tile" onclick="showPrayer()">🕌<b>مواقيت الصلاة</b><span>مغاغة</span></button>
+ <button class="tile" onclick="showReciters()">🎙️<b>التلاوات</b><span>قراء مغاغة والمنيا</span></button>
+ <button class="tile" onclick="showFavorites()">❤️<b>المفضلة</b><span>آياتك المحفوظة</span></button>
+<button class="tile" onclick="showSettings()">⚙️<b>الإعدادات</b><span>التطبيق</span></button>
+</div>
+<section id="content" class="card content"><div class="section-title">ورد اليوم</div><p>اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا.</p></section>
+</main>
+
+<nav class="bottom">
+ <button class="active" onclick="home()">⌂<span>الرئيسية</span></button>
+ <button onclick="openQuran()">📖<span>القرآن</span></button>
+ <button onclick="showAzkar()">📿<span>الأذكار</span></button>
+ <button onclick="showFavorites()">❤️<span>المفضلة</span></button>
+ <button onclick="showAbout()">🤲<span>الصدقة</span></button>
+</nav>
+
+<script>
+const content=document.getElementById('content');
+const lastRead=document.getElementById('lastRead'), lastMeta=document.getElementById('lastMeta');
+const saved=JSON.parse(localStorage.getItem('noorLastRead')||'null');
+if(saved){lastRead.textContent=saved.name;lastMeta.textContent=`السورة رقم ${saved.number}`}
+
+document.getElementById('themeBtn').onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('dark',document.body.classList.contains('dark'))};
+if(localStorage.getItem('dark')==='true')document.body.classList.add('dark');
+
+function home(){location.reload()}
+
+async function getSurahs(){
+ const r=await fetch('https://api.alquran.cloud/v1/surah'); if(!r.ok)throw Error(); return (await r.json()).data;
+}
+async function openQuran(){
+ content.innerHTML='<div class="section-title">القرآن الكريم</div><p>جارٍ تحميل السور…</p>';
+ try{
+  const data=await getSurahs();
+  content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">سور القرآن الكريم</div><div class="quran-list" id="surahs"></div>';
+  const list=document.getElementById('surahs');
+  data.forEach(s=>{const b=document.createElement('button');b.className='surah';b.innerHTML=`<span><strong>${s.number}. ${s.name}</strong><br><small>${s.englishName}</small></span><span>${s.numberOfAyahs} آية</span>`;b.onclick=()=>openSurah(s.number,s.name);list.appendChild(b)});
+ }catch(e){content.innerHTML='<p>تعذر تحميل القرآن. تأكد من الإنترنت.</p>'}
+}
+async function openSurah(n,name){
+ content.innerHTML='<button class="back" onclick="openQuran()">← كل السور</button><div class="section-title">'+name+'</div><p>جارٍ التحميل…</p>';
+ try{
+  const r=await fetch(`https://api.alquran.cloud/v1/surah/${n}/quran-uthmani`);const d=await r.json();
+  localStorage.setItem('noorLastRead',JSON.stringify({number:n,name}));lastRead.textContent=name;lastMeta.textContent=`السورة رقم ${n}`;
+  content.innerHTML=`<button class="back" onclick="openQuran()">← كل السور</button><div class="section-title">${name}</div><div id="ayahs"></div>`;
+  document.getElementById('ayahs').innerHTML=d.data.ayahs.map(a=>{
+   const key=`${n}:${a.numberInSurah}`,fav=JSON.parse(localStorage.getItem('noorFav')||'[]').includes(key);
+   return `<div class="ayah" id="a${a.numberInSurah}"><button class="fav" onclick="toggleFav('${key}','${encodeURIComponent(a.text)}','${encodeURIComponent(name)}','${a.numberInSurah}')">${fav?'♥':'♡'}</button>${a.text} <small>﴿${a.numberInSurah}﴾</small><br><button class="pill" onclick="shareAyah('${encodeURIComponent(a.text)}','${encodeURIComponent(name)}','${a.numberInSurah}')">مشاركة</button></div>`
+  }).join('');
+ }catch(e){content.innerHTML='<p>حدث خطأ أثناء تحميل السورة.</p>'}
+}
+function toggleFav(key,text,name,num){
+ let f=JSON.parse(localStorage.getItem('noorFav')||'[]'); f=f.includes(key)?f.filter(x=>x!==key):[...f,key];localStorage.setItem('noorFav',JSON.stringify(f));openSurah(Number(key.split(':')[0]),decodeURIComponent(name));
+}
+async function shareAyah(text,name,num){
+ const msg=`${decodeURIComponent(text)}\n\n— ${decodeURIComponent(name)}، الآية ${num}\n\nنور مغاغة`;
+ if(navigator.share) await navigator.share({text:msg}); else {await navigator.clipboard.writeText(msg);alert('تم نسخ الآية للمشاركة');}
+}
+function showFavorites(){
+ const f=JSON.parse(localStorage.getItem('noorFav')||'[]');
+ content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">❤️ المفضلة</div>';
+ content.innerHTML+=f.length?'<p>الآيات المحفوظة: '+f.length+'</p><p>يمكنك فتح السورة من القرآن للوصول للآية.</p>':'<p>لم تحفظ أي آيات بعد.</p>';
+}
+function showSearch(){
+ content.innerHTML=`<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">🔎 البحث في القرآن</div><div class="searchbox"><input id="q" placeholder="اكتب كلمة أو عبارة"><button onclick="doSearch()">بحث</button></div><div id="results"></div>`;
+}
+async function doSearch(){
+ const q=document.getElementById('q').value.trim(), box=document.getElementById('results');if(!q)return;
+ box.innerHTML='<p>جارٍ البحث…</p>';
+ try{
+  const r=await fetch(`https://api.alquran.cloud/v1/search/${encodeURIComponent(q)}/all/quran-uthmani`);const d=await r.json();
+  box.innerHTML=d.data.matches?.length?d.data.matches.slice(0,30).map(m=>`<div class="ayah">${m.text} <small>﴿${m.surah.name} ${m.numberInSurah}﴾</small></div>`).join(''):'<p>لا توجد نتائج.</p>';
+ }catch(e){box.innerHTML='<p>تعذر تنفيذ البحث الآن.</p>'}
+}
+const AZKAR=[['أذكار الصباح','أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له.'],['الاستغفار','أستغفر الله وأتوب إليه.'],['التسبيح','سبحان الله وبحمده، سبحان الله العظيم.'],['الصلاة على النبي','اللهم صل وسلم وبارك على نبينا محمد ﷺ.'],['أذكار المساء','أمسينا وأمسى الملك لله، والحمد لله.']];
+function showAzkar(){
+ content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">📿 الأذكار</div>'+AZKAR.map((z,i)=>`<div class="card"><b>${z[0]}</b><p class="ayah">${z[1]}</p><button class="small" onclick="countZikr(${i})">تسبيح/تكرار</button> <span id="c${i}" class="counter">0</span></div>`).join('');
+}
+function countZikr(i){const e=document.getElementById('c'+i);e.textContent=Number(e.textContent)+1}
+async function showPrayer(){
+ content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">🕌 مواقيت الصلاة — مغاغة</div><p>جارٍ تحميل مواقيت اليوم…</p>';
+ try{
+  const lat=28.6484, lon=30.8423;
+  const date=new Date().toISOString().slice(0,10);
+  const r=await fetch(`https://api.aladhan.com/v1/timings/${date}?latitude=${lat}&longitude=${lon}&method=5`);
+  const d=await r.json(), t=d.data.timings;
+  const rows=[['الفجر','Fajr'],['الشروق','Sunrise'],['الظهر','Dhuhr'],['العصر','Asr'],['المغرب','Maghrib'],['العشاء','Isha']];
+  content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">🕌 مواقيت الصلاة — مغاغة</div><p>المواقيت محسوبة لموقع مدينة مغاغة، محافظة المنيا.</p><div class="quran-list">'+rows.map(x=>`<div class="surah"><strong>${x[0]}</strong><span>${t[x[1]]}</span></div>`).join('')+'</div><div class="card"><b>🧭 اتجاه القبلة</b><p>اتجاه القبلة التقريبي من مغاغة: '+qiblaDirection(lat,lon).toFixed(0)+'° من الشمال.</p></div>';
+ }catch(e){content.innerHTML='<p>تعذر تحميل مواقيت الصلاة الآن. حاول مرة أخرى.</p>'}
+}
+function qiblaDirection(lat,lon){
+ const kaLat=21.4225*Math.PI/180, kaLon=39.8262*Math.PI/180, p=lat*Math.PI/180, dl=kaLon-lon*Math.PI/180;
+ return (Math.atan2(Math.sin(dl),Math.cos(p)*Math.tan(kaLat)-Math.sin(p)*Math.cos(dl))*180/Math.PI+360)%360;
+}
+function showSettings(){
+ content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">⚙️ الإعدادات</div><div class="settings-row"><span>الوضع الليلي</span><button class="pill" onclick="document.getElementById(\'themeBtn\').click()">تبديل</button></div><div class="settings-row"><span>حجم خط القرآن</span><button class="pill" onclick="changeFont(1)">تكبير</button></div><div class="settings-row"><span>مسح آخر قراءة</span><button class="pill" onclick="localStorage.removeItem(\'noorLastRead\');alert(\'تم المسح\')">مسح</button></div><div class="settings-row"><span>مسح المفضلة</span><button class="pill" onclick="localStorage.removeItem(\'noorFav\');alert(\'تم المسح\')">مسح</button></div>';
+}
+function changeFont(delta){
+ const el=document.querySelector('.ayah'); if(!el)return; const size=parseInt(getComputedStyle(el).fontSize)+delta*2; document.documentElement.style.setProperty('--ayah-size',size+'px');
+}
+const RECITERS=[
+ {id:'ar.alafasy',name:'الشيخ مشاري راشد العفاسي',note:'تلاوات عبر Al Quran Cloud — للاستخدام غير التجاري'},
+ {id:'ar.abdulbasitmurattal',name:'الشيخ عبد الباسط عبد الصمد',note:'تلاوات عبر Al Quran Cloud — للاستخدام غير التجاري'},
+ {id:'ar.husary',name:'الشيخ محمود خليل الحصري',note:'تلاوات عبر Al Quran Cloud — للاستخدام غير التجاري'}
+];
+function showReciters(){
+ content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">🎙️ التلاوات</div><div class="quran-list" id="reciterList"></div><div class="card"><b>🇪🇬 قراء مغاغة</b><p>قسم مخصص للتسجيلات المحلية التي يثبت لدينا إذن نشرها.</p><button class="small" onclick="showLocalReciters()">فتح القسم</button></div><div class="card"><small>مصدر التلاوات الحالية: Al Quran Cloud / Islamic Network. التلاوات تُبث من المصدر ولا تُنسخ داخل التطبيق، مع الالتزام بشروط المصدر ونسبة التلاوة لقارئها.</small></div>';
+ const list=document.getElementById('reciterList');RECITERS.forEach(r=>{const b=document.createElement('button');b.className='surah';b.innerHTML=`<span><strong>${r.name}</strong><br><small>${r.note}</small></span><span>›</span>`;b.onclick=()=>chooseAudioSurah(r);list.appendChild(b)})
+}
+async function chooseAudioSurah(reciter){
+ content.innerHTML='<button class="back" onclick="showReciters()">← القراء</button><div class="section-title">'+reciter.name+'</div><p>جارٍ التحميل…</p>';
+ try{const data=await getSurahs();content.innerHTML='<button class="back" onclick="showReciters()">← القراء</button><div class="section-title">'+reciter.name+'</div><div class="quran-list" id="audioSurahs"></div>';const list=document.getElementById('audioSurahs');data.forEach(s=>{const b=document.createElement('button');b.className='surah';b.innerHTML=`<span><strong>${s.number}. ${s.name}</strong></span><span>▶</span>`;b.onclick=()=>playSurah(reciter,s.number,s.name);list.appendChild(b)})}catch(e){content.innerHTML='<p>تعذر تحميل السور.</p>'}
+}
+function playSurah(reciter,n,name){
+ const url=`https://cdn.islamic.network/quran/audio-surah/128/${reciter.id}/${n}.mp3`;
+ content.innerHTML=`<button class="back" onclick="chooseAudioSurah(${JSON.stringify(reciter).replace(/"/g,'&quot;')})">← السور</button><div class="section-title">${name}</div><div class="card"><b>${reciter.name}</b><p><small>المصدر: Al Quran Cloud / Islamic Network</small></p><audio controls autoplay preload="metadata" style="width:100%" src="${url}"></audio></div>`;
+}
+function showLocalReciters(){
+ content.innerHTML='<button class="back" onclick="showReciters()">← التلاوات</button><div class="section-title">🇪🇬 قراء مغاغة</div><div class="card"><b>الشيخ عبد الله كامل</b><p>ابن قرية المشرّقة بمركز مغاغة — مساحة مخصصة لإضافة التسجيلات المصرح باستخدامها.</p></div><div class="card"><b>الشيخ محمد محمود الطبلاوي</b><p>قسم أرشيفي للتعريف به وصلته المحلية، مع مراعاة حقوق التسجيلات.</p></div><div class="card"><b>الشيخ عبد المنعم الطوخي</b><p>قسم أرشيفي للتعريف به وتسجيلاته المصرح بها عند توفرها.</p></div><div class="card"><b>قراء المحافل المحليون</b><p>سنضيف الأسماء والتسجيلات التي تحصل عليها المبادرة بإذن أصحابها.</p></div>';
+}
+function showAbout(){
+ content.innerHTML='<button class="back" onclick="home()">← الرئيسية</button><div class="section-title">🤲 صدقة جارية</div><p>نور مغاغة مبادرة تهدف إلى نشر القرآن والذكر وخدمة أهل مركز مغاغة.</p><p>نسأل الله أن يجعل هذا العمل صدقة جارية لكل من ساهم فيه.</p>';
+}
+
+</script>
+</body>
+</html>
